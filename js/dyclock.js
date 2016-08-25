@@ -68,10 +68,12 @@
         case "12":
             //set hour
             if (dateData.hour === 0) {
-                dateString = "12 : ";
+                dateString = "12 ";
             } else if (dateData.hour > 12) {
                 tmp = (dateData.hour - 12);
-                dateString = (tmp < 10) ? "0" + tmp + " : " : tmp + " : ";
+                dateString = (tmp < 10) ? "0" + tmp : tmp;
+            } else {
+                dateString = (dateData.hour < 10) ? "0" + dateData.hour : dateData.hour;
             }
 
             break;
