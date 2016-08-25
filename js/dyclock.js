@@ -131,7 +131,7 @@
 
         updateDateData();
 
-        document.getElementById(dateOption.target).innerHTML = getTimeString(dateData);
+        document.getElementById(dateOption.target).innerHTML = "<div class='dyclock-digital-time'>" + getTimeString(dateData) + "</div>";
 
         setTimeout(tickDigital, 1000);
     }
