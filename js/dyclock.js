@@ -1,5 +1,5 @@
 /*!
- * dyclock is a JavaScript library for creating clock.
+ * dyClock is a JavaScript library for creating clock.
  *
  * Author: Yusuf Shakeel
  * https://github.com/yusufshakeel
@@ -101,6 +101,15 @@
             dateString = dateString + " : " + dateData.second;
         }
 
+        //show am/pm
+        if (dateOption.showam === true) {
+            if (dateData.hour >= 12) {
+                dateString = dateString + " PM";
+            } else {
+                dateString = dateString + " AM";
+            }
+        }
+
         return dateString;
 
     }
@@ -141,18 +150,23 @@
      */
     function updateDateData() {
 
-        dateData.second = dateData.second + 1;
-        if (dateData.second === 60) {
-            dateData.second = 0;
-            dateData.minute = dateData.minute + 1;
-            if (dateData.minute === 60) {
-                dateData.minute = 0;
-                dateData.hour = dateData.hour + 1;
-                if (dateData.hour === 0) {
-                    dateData.hour = 0;
-                }
-            }
-        }
+        dateObj = new Date();
+        dateData.hour = dateObj.getHours();
+        dateData.minute = dateObj.getMinutes();
+        dateData.second = dateObj.getSeconds();
+
+        // dateData.second = dateData.second + 1;
+        // if (dateData.second === 60) {
+        //     dateData.second = 0;
+        //     dateData.minute = dateData.minute + 1;
+        //     if (dateData.minute === 60) {
+        //         dateData.minute = 0;
+        //         dateData.hour = dateData.hour + 1;
+        //         if (dateData.hour === 0) {
+        //             dateData.hour = 0;
+        //         }
+        //     }
+        // }
 
     }
 
@@ -166,6 +180,7 @@
      *  target : "string"   //(mandatory) for id use #id | for class user .class
      *  clock : "string"    //(optional) values: "analog|digital" default: digital
      *  hour : "string"     //(optional) values: "12|24" default: "24"
+     *  showam : "boolean"    //(optional) values: "true|false" default: false
      * }
      */
     dyclock.draw = function (option) {
@@ -182,6 +197,7 @@
             defaults = {
                 clock : "digital",
                 hour : "24",
+                showam : false
             };
 
         //find target element by

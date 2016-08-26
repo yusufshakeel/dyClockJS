@@ -1,0 +1,93 @@
+/*!
+ * dyClock is a JavaScript library for creating clock.
+ *
+ * Author: Yusuf Shakeel
+ * https://github.com/yusufshakeel
+ *
+ * GitHub Link: https://github.com/yusufshakeel/dyClockJS
+ *
+ * MIT license
+ * Copyright (c) 2016 Yusuf Shakeel
+ *
+ * Date: 2014-01-29 Wednesday
+ */
+
+.dyclock-container {
+    display: inline-block;
+    border : 1px solid #eee;
+}
+
+.dyclock-digital-time {
+    padding : 5px;
+}
+
+/*================================== dyclock SKIN =======================*/
+
+/*
+ * clock skin  (skin-black)
+ *-------------------------------------------------*/
+.dyclock-container.skin-black {
+    color : #fff;
+    background-color: #111;
+    border : 0;
+}
+
+/*
+ * clock skin  (skin-blue)
+ *-------------------------------------------------*/
+.dyclock-container.skin-blue {
+    color : #fff;
+    background-color: #3c99d3;
+    border : 0;
+}
+
+/*
+ * clock skin  (skin-green)
+ *-------------------------------------------------*/
+.dyclock-container.skin-green {
+    color : #fff;
+    background-color: #2bb063;
+    border : 0;
+}
+
+/*
+ * clock skin  (skin-purple)
+ *-------------------------------------------------*/
+.dyclock-container.skin-purple {
+    color : #fff;
+    background-color: #975ea4;
+    border : 0;
+}
+
+/*
+ * clock skin  (skin-red)
+ *-------------------------------------------------*/
+.dyclock-container.skin-red {
+    color : #fff;
+    background-color: #e94d40;
+    border : 0;
+}
+
+/*
+ * clock skin  (skin-spacegray)
+ *-------------------------------------------------*/
+.dyclock-container.skin-spacegray {
+    color : #fff;
+    background-color: #343d46;
+    border : 0;
+}
+
+/*================================== dyclock SKIN ENDS HERE =============*/
+
+
+/*================================== dyclock SHADOW =====================*/
+/*
+ * clock shadow  (shadow-default)
+ *-------------------------------------------------*/
+ .dyclock-container.shadow-default {
+     -moz-box-shadow: 0 4px 4px 0 rgba(50, 50, 50, 0.4);
+     -webkit-box-shadow: 0 4px 4px 0 rgba(50, 50, 50, 0.4);
+     box-shadow: 0 4px 4px 0 rgba(50, 50, 50, 0.4);
+ }
+
+/*================================== dyclock SHADOW ENDS HERE ===========*/
