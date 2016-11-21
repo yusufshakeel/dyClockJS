@@ -21,211 +21,263 @@
     var
         document = global.document,
 
-        //this will be used by the user
-        dyclock = {},
+        //default settings
+        defaults = {
+            clock : "digital",
+            format : "hh:mm:ss",
+            face : "4",
+            numeral : "decimal",
+            hand : "hms"
+        },
 
-        //options for the date
-        dateOption = {},
-
-        //the date object
-        dateObj,
-
-        //this holds the date data
-        dateData = {},
-
-        //date string
-        dateString;
-
-    /**
-     * this function will extend source object with defaults object.
-     *
-     * @param object source     this is the source object
-     * @param object defaults   this is the default object
-     * @return object
-     */
-    function extendSource (source, defaults) {
-        var property;
-        for (property in defaults) {
-            if (source.hasOwnProperty(property) === false) {
-                source[property] = defaults[property];
+        /**
+         * this function will extend source object with defaults object.
+         *
+         * @param object source     this is the source object
+         * @param object defaults   this is the default object
+         * @return object
+         */
+        extendSource = function (source, defaults) {
+            var property;
+            for (property in defaults) {
+                if (source.hasOwnProperty(property) === false) {
+                    source[property] = defaults[property];
+                }
             }
-        }
-        return source;
-    }
+            return source;
+        },
 
-    /**
-     * this function will return time string based on user option.
-     *
-     * @return string
-     */
-    function getTimeString () {
+        /**
+         * This method will draw Analog clock.
+         */
+        drawAnalog = function () {
 
-        //variable
-        var
-            tmp;
+        },
 
-        switch (dateOption.hour) {
-        case "12":
-            //set hour
-            if (dateData.hour === 0) {
-                dateString = "12 ";
-            } else if (dateData.hour > 12) {
-                tmp = (dateData.hour - 12);
-                dateString = (tmp < 10) ? "0" + tmp : tmp;
+        /**
+         * This method will draw Digital clock.
+         */
+        drawDigital = function (clockOption) {
+
+            var
+                elemArr, i, len,
+                dateObj = new global.Date(),
+                dateData = {};
+
+            //get current time
+            dateData.hour = dateObj.getHours();
+            dateData.minute = dateObj.getMinutes();
+            dateData.second = dateObj.getSeconds();
+
+            if (clockOption.target_elementBy === "id") {
+
+                document.getElementById(clockOption.target).innerHTML = "<div class='dyclock-digital-time'>" + getTimeString(dateData, clockOption) + "</div>";
+
+            } else if (clockOption.target_elementBy === "class") {
+
+                elemArr = document.getElementsByClassName(clockOption.target);
+                for (i = 0, len = elemArr.length; i < len; i = i + 1) {
+                    elemArr[i].innerHTML = "<div class='dyclock-digital-time'>" + getTimeString(dateData, clockOption) + "</div>";
+                }
+
+            }
+
+            setTimeout(drawDigital(clockOption), 1000);
+        },
+
+        /**
+         * this function will return time string based on user option.
+         *
+         * @param object dateData
+         * @param object clockOption
+         * @return string
+         */
+        getTimeString = function (dateData, clockOption) {
+
+            //variable
+            var
+                tmp,
+                timeString = "";
+
+            switch (clockOption.format_time.hour) {
+            case "12":
+                //set hour
+                if (dateData.hour === 0) {
+                    timeString = "12 ";
+                } else if (dateData.hour > 12) {
+                    tmp = (dateData.hour - 12);
+                    timeString = (tmp < 10) ? "0" + tmp : tmp;
+                } else {
+                    timeString = (dateData.hour < 10) ? "0" + dateData.hour : dateData.hour;
+                }
+
+                break;
+
+            case "24":
+                //set hour
+                timeString = (dateData.hour < 10) ? "0" + dateData.hour : dateData.hour;
+                break;
+
+            default:
+                global.console.error("Invalid format: hour");
+            }
+
+            //set minute
+            if (dateData.minute < 10) {
+                timeString = timeString + " : 0" + dateData.minute;
             } else {
-                dateString = (dateData.hour < 10) ? "0" + dateData.hour : dateData.hour;
+                timeString = timeString + " : " + dateData.minute;
             }
 
-            break;
+            //set second
+            if (clockOption.format_time.showSeconds === true) {
+                if (dateData.second < 10) {
+                    timeString = timeString + " : 0" + dateData.second;
+                } else {
+                    timeString = timeString + " : " + dateData.second;
+                }
+            }
 
-        case "24":
-            //set hour
-            dateString = (dateData.hour < 10) ? "0" + dateData.hour : dateData.hour;
-            break;
+            //show am/pm
+            if (clockOption.format_showam === true) {
+                if (dateData.hour >= 12) {
+                    timeString = timeString + " " + clockOption.format_showamvalue[1];
+                } else {
+                    timeString = timeString + " " + clockOption.format_showamvalue[0];
+                }
+            }
 
-        default:
-            return "Error: hour";
-        }
+            return timeString;
 
-        //set minute
-        if (dateData.minute < 10) {
-            dateString = dateString + " : 0" + dateData.minute;
-        } else {
-            dateString = dateString + " : " + dateData.minute;
-        }
+        },
 
-        //set second
-        if (dateData.second < 10) {
-            dateString = dateString + " : 0" + dateData.second;
-        } else {
-            dateString = dateString + " : " + dateData.second;
-        }
+        //------------------------------ dyClock ----------------------
 
-        //show am/pm
-        if (dateOption.showam === true) {
-            if (dateData.hour >= 12) {
-                dateString = dateString + " PM";
+        /**
+         * this will create the dyclock object based on the configuration
+         * option passed by the user.
+         *
+         * option = {
+         *  target : "string"   //(mandatory) for id use #id | for class use .class
+         *  clock : "string"    //(optional) values: "analog|digital|both" default: digital
+         *  format : "string"   //(optional) values: "(hh|HH):mm(:ss) (a|A)" default: "HH:MM:SS"
+         *  face : "string"     //(optional) values: "4|12" default: "4" applicable: analog clock
+         *  numeral : "string"  //(optional) values: "dot|decimal" applicable: analog clock
+         *  hand : "string"     //(optional) values: "hm(s)" applicable: analog clock
+         * }
+         */
+        dyClock = function (option) {
+
+            //check if option is passed or not
+            if(typeof option === "undefined") {
+                global.console.error("Option missing.");
+            }
+
+            //extend user options with predefined options
+            this.clockOption = extendSource(option, defaults);
+
+            //initialize clock option format
+            this.initClockOption_format();
+
+            //set target
+            if (this.clockOption.target[0] === "#") {
+                this.clockOption.target_elementBy = "id";
+            } else if (this.clockOption.target[0] === ".") {
+                this.clockOption.target_elementBy = "class";
             } else {
-                dateString = dateString + " AM";
+                global.console.error("Invalid target value");
             }
-        }
+            this.clockOption.target = this.clockOption.target.substring(1);
 
-        return dateString;
+        };
 
-    }
+        //------------------------------ dyClock ends here ------------
 
-    /**
-     * this function will initialize the dateData.
-     */
-    function initTime () {
+    //--------------------------------- dyClock methods ---------------
 
-        dateObj = new Date();
-        dateData.hour = dateObj.getHours();
-        dateData.minute = dateObj.getMinutes();
-        dateData.second = dateObj.getSeconds();
+    dyClock.prototype = {
 
-    }
+        /**
+         * this will draw the clock
+         */
+        draw : function () {
 
-    /**
-     * This function will create Analog clock.
-     */
-    function tickAnalog () {
+            var
+                self = this;
 
-    }
+            if (self.clockOption.clock === "digital") {
 
-    /**
-     * This function will create Digital clock.
-     */
-    function tickDigital () {
+                drawDigital(self.clockOption);
 
-        updateDateData();
+            } else if (self.clockOption.clock === "analog") {
 
-        document.getElementById(dateOption.target).innerHTML = "<div class='dyclock-digital-time'>" + getTimeString(dateData) + "</div>";
+                drawAnalog(self.clockOption);
 
-        setTimeout(tickDigital, 1000);
-    }
+            } else if (self.clockOption.clock === "both") {
 
-    /**
-     * This function will update dateData.
-     */
-    function updateDateData() {
+                drawAnalog(self.clockOption);
 
-        dateObj = new Date();
-        dateData.hour = dateObj.getHours();
-        dateData.minute = dateObj.getMinutes();
-        dateData.second = dateObj.getSeconds();
+            } else {
 
-        // dateData.second = dateData.second + 1;
-        // if (dateData.second === 60) {
-        //     dateData.second = 0;
-        //     dateData.minute = dateData.minute + 1;
-        //     if (dateData.minute === 60) {
-        //         dateData.minute = 0;
-        //         dateData.hour = dateData.hour + 1;
-        //         if (dateData.hour === 0) {
-        //             dateData.hour = 0;
-        //         }
-        //     }
-        // }
+                global.console.error("Invalid clock type");
 
-    }
+            }
 
-    //------------------------------ dyclock.draw() ----------------------
+        },
 
-    /**
-     * this function will create the clock based on the configuration
-     * option passed by the user.
-     *
-     * option = {
-     *  target : "string"   //(mandatory) for id use #id | for class user .class
-     *  clock : "string"    //(optional) values: "analog|digital" default: digital
-     *  hour : "string"     //(optional) values: "12|24" default: "24"
-     *  showam : "boolean"    //(optional) values: "true|false" default: false
-     * }
-     */
-    dyclock.draw = function (option) {
+        /**
+         * this method will initialize the clock option format
+         */
+        initClockOption_format : function () {
 
-        //check if option is passed or not
-        if(typeof option === "undefined") {
-            return false;
-        }
+            var
+                self = this,
+                obj = {},
+                format = [],
+                time,
+                ampm;
 
-        var
-            self = this,    //pointing at dyclock object
+            //split format
+            format = self.clockOption.format.split(" ");
 
-            //default settings
-            defaults = {
-                clock : "digital",
-                hour : "24",
-                showam : false
-            };
+            //get time format from format
+            time = format[0].split(":");
 
-        //find target element by
-        if (option.target[0] === "#") {
-            //targetedElementBy = "id";
-        } else if (option.target[0] === ".") {
-            //targetedElementBy = "class";
-        }
-        option.target = option.target.substring(1);
+            //get am/pm format from format
+            ampm = (typeof format[1] !== "undefined") ? format[1] : false;
 
-        //extend user options with predefined options
-        dateOption = extendSource(option, defaults);
+            //set format time
+            if (time[0] === "hh") {
+                obj.hour = "12";
+            } else if (time[0] === "HH") {
+                obj.hour = "24";
+            }
 
-        //initialize time
-        initTime();
+            obj.showMinutes = true;
 
-        if (dateOption.clock === "digital") {
-            tickDigital();
-        } else if (dateOption.clock === "analog") {
-            tickAnalog();
+            if (typeof time[2] !== "undefined" && time[2] === "ss") {
+                obj.showSeconds = true;
+            } else {
+                obj.showSeconds = false;
+            }
+
+            self.clockOption.format_time = obj;
+
+            //set format ampm
+            if (ampm === false) {
+                self.clockOption.format_showam = false;
+            } else {
+                //if lowercase am/pm then 0, else 1
+                self.clockOption.format_showam = true;
+                self.clockOption.format_showamvalue = (ampm === "a") ? ["am", "pm"] : ["AM", "PM"];
+            }
         }
 
     };
 
-
-    //------------------------------ dyclock.draw() ends here ------------
+    //--------------------------------- dyClock methods ends here -----
 
     //attach to global window object
-    global.dyclock = dyclock;
+    global.dyClock = dyClock;
 
 }(typeof window !== "undefined" ? window : this));
