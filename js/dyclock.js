@@ -20,7 +20,7 @@
 
     var
         /**
-         * this will create the DYclock object based on the configuration
+         * this will create the dyClock object based on the configuration
          * option passed by the user.
          *
          * option = {
@@ -33,7 +33,7 @@
          * @param object target
          * @param object options
          */
-        DYclock = function (target, options) {
+        dyClock = function (target, options) {
 
             if (typeof target === "undefined") {
                 global.console.error("target undefined");
@@ -50,7 +50,7 @@
         /**
          * defaults
          */
-        DYclock.prototype.defaults = {
+        dyClock.prototype.defaults = {
             clock : "digital",
             format : "HH:mm:ss",
             hand : "hms"
@@ -63,7 +63,7 @@
          * @param object defaults   this is the default object
          * @return object
          */
-        DYclock.prototype.extendSource = function (source, defaults) {
+        dyClock.prototype.extendSource = function (source, defaults) {
             var property;
             for (property in defaults) {
                 if (source.hasOwnProperty(property) === false) {
@@ -76,7 +76,7 @@
         /**
          * set clock options format
          */
-        DYclock.prototype.setClockOptionFormat = function () {
+        dyClock.prototype.setClockOptionFormat = function () {
 
             var
                 obj = {},
@@ -123,7 +123,7 @@
         /**
          * get current time
          */
-        DYclock.prototype.getTime = function () {
+        dyClock.prototype.getTime = function () {
 
             var
                 dateObj = new global.Date(),
@@ -144,7 +144,7 @@
          * @param object clockOption
          * @return string
          */
-        DYclock.prototype.getTimeString = function (timeData, clockOption) {
+        dyClock.prototype.getTimeString = function (timeData, clockOption) {
 
             var
                 tmp,
@@ -205,7 +205,7 @@
         /**
          * this function will start the clock
          */
-        DYclock.prototype.start = function () {
+        dyClock.prototype.start = function () {
 
             var self = this;
 
@@ -220,7 +220,7 @@
         /**
          * this function will stop the clock
          */
-         DYclock.prototype.stop = function () {
+         dyClock.prototype.stop = function () {
 
              global.clearInterval(this.tick);
 
@@ -229,7 +229,7 @@
         /**
          * this function will draw the digital clock
          */
-        DYclock.prototype.drawDigitalClock = function () {
+        dyClock.prototype.drawDigitalClock = function () {
 
             var
                 html = "<div class='dyclock-digital-time'>" + this.getTimeString(this.getTime(), this.clockOption) + "</div>";
@@ -241,14 +241,14 @@
         /**
          * this function will draw the analog clock
          */
-        DYclock.prototype.drawAnalogClock = function () {
+        dyClock.prototype.drawAnalogClock = function () {
 
         };
 
     /**
      * attach to global
      */
-     global.DYclock = DYclock;
+     global.dyClock = dyClock;
 
 }(typeof window !== "undefined" ? window : this,
 typeof jQuery !== "undefined" ? jQuery : undefined));
