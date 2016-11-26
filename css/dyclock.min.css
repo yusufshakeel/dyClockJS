@@ -1,0 +1,13 @@
+/*!
+ * dyClock is a JavaScript library for creating clock.
+ *
+ * Author: Yusuf Shakeel
+ * https://github.com/yusufshakeel
+ *
+ * GitHub Link: https://github.com/yusufshakeel/dyClockJS
+ *
+ * MIT license
+ * Copyright (c) 2016 Yusuf Shakeel
+ *
+ * Date: 2014-01-29 Wednesday
+ */.dyclock-container{display:inline-block}.dyclock-digital-time{padding:5px}.dyclock-h-hand,.dyclock-m-hand,.dyclock-s-hand,.dyclock-s-tail{stroke:#000;stroke-linecap:round}.dyclock-h-hand{stroke-width:3px}.dyclock-m-hand{stroke-width:2px}.dyclock-s-hand,.dyclock-s-tail{stroke-width:1px}.dyclock-container.skin-black{color:#fff;background-color:#111;border:0}.dyclock-container.skin-blue{color:#fff;background-color:#3c99d3;border:0}.dyclock-container.skin-green{color:#fff;background-color:#2bb063;border:0}.dyclock-container.skin-purple{color:#fff;background-color:#975ea4;border:0}.dyclock-container.skin-red{color:#fff;background-color:#e94d40;border:0}.dyclock-container.skin-spacegray{color:#fff;background-color:#343d46;border:0}.dyclock-container.shadow-default{-moz-box-shadow:0 4px 4px 0 rgba(50,50,50,.4);-webkit-box-shadow:0 4px 4px 0 rgba(50,50,50,.4);box-shadow:0 4px 4px 0 rgba(50,50,50,.4)}

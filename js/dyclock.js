@@ -28,6 +28,8 @@
          *  format : "string"   //(optional) values: "(hh|HH):mm(:ss) (a|A)" default: "HH:mm:ss"
          *  hand : "string"     //(optional) values: "hm(s)" applicable: analog clock
          *  image : "string"    //(optional) value: /path/to/image file applicable: analog clock
+         *  radius : integer    //(optional) values: integer min: 40px max: 150px applicable: analog clock
+         *  showdigital : boolean   //(optional) values: true|false default: false applicable: analog clock
          * }
          *
          * @param object target
@@ -35,14 +37,28 @@
          */
         dyClock = function (target, options) {
 
+            //checking target
             if (typeof target === "undefined") {
                 global.console.error("target undefined");
                 return;
             }
 
+            //checking radius - applicable for analog clock
+            if (typeof options !== "undefined" && typeof options.radius !== "undefined") {
+
+                options.radius = global.Math.ceil(options.radius);
+
+                if (options.radius < 40) {
+                    options.radius = 40;
+                } else if (options.radius > 150) {
+                    options.radius = 150;
+                }
+            }
+
             this.target = target;
             this.clockOption = (typeof options !== "undefined") ? this.extendSource(options, this.defaults) : this.defaults;
             this.tick = null;
+            this.analogClockLinePrefix = this.target.selector.substring(1);
             this.setClockOptionFormat();
 
         };
@@ -53,7 +69,9 @@
         dyClock.prototype.defaults = {
             clock : "digital",
             format : "HH:mm:ss",
-            hand : "hms"
+            hand : "hms",
+            radius : 150,
+            showdigital : false
         };
 
         /**
@@ -210,9 +228,11 @@
             var self = this;
 
             if (this.clockOption.clock === "digital") {
-                this.tick = global.setInterval( function() { self.drawDigitalClock(); }, 1000);
+                this.tick = global.setInterval( function() { self.runDigitalClock(); }, 1000);
             } else if (this.clockOption.clock === "analog") {
                 this.drawAnalogClock();
+
+                this.tick = global.setInterval( function() { self.runAnalogClock(); }, 1000);
             }
 
         };
@@ -227,9 +247,9 @@
          };
 
         /**
-         * this function will draw the digital clock
+         * this function will run the digital clock
          */
-        dyClock.prototype.drawDigitalClock = function () {
+        dyClock.prototype.runDigitalClock = function () {
 
             var
                 html = "<div class='dyclock-digital-time'>" + this.getTimeString(this.getTime(), this.clockOption) + "</div>";
@@ -243,6 +263,92 @@
          */
         dyClock.prototype.drawAnalogClock = function () {
 
+            var
+                width = this.clockOption.radius * 2,
+                height = width,
+                cx = this.clockOption.radius,
+                cy = cx,
+                hlen = global.Math.ceil(this.clockOption.radius * 0.65),
+                mlen = global.Math.ceil(this.clockOption.radius * 0.3),
+                slen = global.Math.ceil(this.clockOption.radius * 0.1),
+                stlen = global.Math.ceil(this.clockOption.radius * 0.9),
+                clockStyle = "",
+                hStyle = "",
+                mStyle = "",
+                sStyle = "",
+                timeHTML = "",
+                html;
+
+            if (this.clockOption.showdigital === true) {
+                timeHTML = "<div class='" + this.analogClockLinePrefix + "-time-string' style='text-align: center'></div>";
+            } else {
+                timeHTML = "<div class='" + this.analogClockLinePrefix + "-time-string' style='display: none; text-align: center'></div>";
+            }
+
+            if (typeof this.clockOption.image !== "undefined") {
+                clockStyle = "style = 'background: url(" + this.clockOption.image + "); background-repeat: no-repeat; background-size: contain;'";
+            }
+
+            if (typeof this.clockOption.hand !== "undefined") {
+                if (this.clockOption.hand[0] !== "h") {
+                    hStyle = "style = 'display: none'";
+                }
+
+                if (this.clockOption.hand[1] !== "m") {
+                    mStyle = "style = 'display: none'";
+                }
+
+                if (this.clockOption.hand[2] !== "s") {
+                    sStyle = "style = 'display: none'";
+                }
+            }
+
+            html = "<div class='dyclock-analog-time' " + clockStyle + ">" +
+                "<svg width='" + width + "' height='" + height + "'>" +
+                    "<line class='" + this.analogClockLinePrefix + "-h-hand dyclock-h-hand' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + hlen + "' " + hStyle + "/>" +
+                    "<line class='" + this.analogClockLinePrefix + "-m-hand dyclock-m-hand' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + mlen + "' " + mStyle + " />" +
+                    "<line class='" + this.analogClockLinePrefix + "-s-hand dyclock-s-hand' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + slen + "' " + sStyle + " />" +
+                    "<line class='" + this.analogClockLinePrefix + "-s-tail dyclock-s-tail' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + stlen + "' " + sStyle + " />" +
+                "</svg>" +
+                timeHTML +
+            "</div>";
+
+            this.target.html(html);
+        };
+
+        /**
+         * this function will run the analog clock
+         */
+        dyClock.prototype.runAnalogClock = function () {
+
+            var
+                d = this.getTime(),
+                h = 30 * ((d.hour % 12) + d.minute / 60),
+                m = 6 * d.minute,
+                s = 6 * d.second;
+
+            //clock-hands
+            $("." + this.analogClockLinePrefix + "-h-hand").attr('transform', this.getRotateStr(h));
+            $("." + this.analogClockLinePrefix + "-m-hand").attr('transform', this.getRotateStr(m));
+            $("." + this.analogClockLinePrefix + "-s-hand").attr('transform', this.getRotateStr(s));
+            $("." + this.analogClockLinePrefix + "-s-tail").attr('transform', this.getRotateStr(s+180));
+
+            //time-string
+            $("." + this.analogClockLinePrefix + "-time-string").html(this.getTimeString(this.getTime(), this.clockOption));
+        };
+
+        /**
+         * this function will return the rotate string for transfrom
+         */
+        dyClock.prototype.getRotateStr = function (val) {
+
+            var
+                width = this.clockOption.radius * 2,
+                height = width,
+                cx = this.clockOption.radius,
+                cy = cx;
+
+            return "rotate(" + val + ", " + cx + ", " + cy + ")";
         };
 
     /**

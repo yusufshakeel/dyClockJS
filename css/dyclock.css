@@ -14,12 +14,33 @@
 
 .dyclock-container {
     display: inline-block;
-    border : 1px solid #eee;
 }
 
 .dyclock-digital-time {
     padding : 5px;
 }
+
+/*================================== dyclock analog hand ===================*/
+.dyclock-h-hand,
+.dyclock-m-hand,
+.dyclock-s-hand,
+.dyclock-s-tail {
+    stroke : black;
+    stroke-linecap : round;
+}
+
+.dyclock-h-hand {
+    stroke-width : 3px;
+}
+.dyclock-m-hand {
+    stroke-width : 2px;
+}
+.dyclock-s-hand,
+.dyclock-s-tail {
+    stroke-width : 1px;
+}
+
+/*================================== dyclock analog hand ENDS HERE =========*/
 
 /*================================== dyclock SKIN =======================*/
 
