@@ -12,21 +12,18 @@
  * Date: 2014-01-29 Wednesday
  */
 
-//default digital clock
-var clock_digital = new dyClock({
-    target : "#dyclock-digital",
-    clock : "digital"
+//default: digital clock default format: (HH:mm:ss)
+var clockObj = new DYclock($("#dyclock-digital"));
+clockObj.start();
+
+//default: digital clock format: (hh:mm:ss a)
+var clockObj2 = new DYclock($("#dyclock-digital-2"), {
+    format : "hh:mm:ss a"
 });
+clockObj2.start();
 
-console.log(clock_digital);
-
-clock_digital.draw();
-
-//digital clock hh:mm:ss a
-//hh = 1-12
-//a = am/pm
-// dyclock.draw({
-//     target : "#dyclock-digital-hh:mm:ss-a",
-//     clock : "digital",
-//     format : "hh:mm:ss a"
-// });
+//default: digital clock format: (hh:mm a)
+var clockObj3 = new DYclock($("#dyclock-digital-3"), {
+    format : "hh:mm a"
+});
+clockObj3.start();
