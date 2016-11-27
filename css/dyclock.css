@@ -12,6 +12,19 @@
  * Date: 2014-01-29 Wednesday
  */
 
+.dyclock-container {
+    display: inline-block;
+}
+
+.dyclock-digital-time {
+    padding : 5px;
+}
+
+.dyclock-analog-time {
+    max-width: 300px;
+    max-height: 300px;
+}
+
 /*================================== font =============================*/
 @font-face {
     font-family: 'Faster One';
@@ -38,45 +51,32 @@
     src: url(../font/VastShadow-Regular.ttf);
 }
 
-.fontfamily-FasterOne-Regular {
+.dyclock-container.fontfamily-FasterOne-Regular {
     font-family: 'Faster One', cursive;
 }
 
-.fontfamily-Frijole-Regular {
+.dyclock-container.fontfamily-Frijole-Regular {
     font-family: 'Frijole', cursive;
 }
 
-.fontfamily-LondrinaOutline-Regular {
+.dyclock-container.fontfamily-LondrinaOutline-Regular {
     font-family: 'Londrina Outline', cursive;
 }
 
-.fontfamily-Monofett {
+.dyclock-container.fontfamily-Monofett {
     font-family: 'Monofett', cursive;
 }
 
-.fontfamily-Orbitron-Regular {
+.dyclock-container.fontfamily-Orbitron-Regular {
     font-family: 'Orbitron', sans-serif;
 }
 
-.fontfamily-VastShadow-Regular {
+.dyclock-container.fontfamily-VastShadow-Regular {
     font-family: 'Vast Shadow', cursive;
 }
 
 /*================================== font ends here ===================*/
 
-
-.dyclock-container {
-    display: inline-block;
-}
-
-.dyclock-digital-time {
-    padding : 5px;
-}
-
-.dyclock-analog-time {
-    max-width: 300px;
-    max-height: 300px;
-}
 
 /*================================== dyclock analog hand ===================*/
 .dyclock-h-hand,
