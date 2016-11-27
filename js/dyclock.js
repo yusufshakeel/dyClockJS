@@ -310,8 +310,8 @@
                     "<line class='" + this.analogClockLinePrefix + "-s-hand dyclock-s-hand' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + slen + "' " + sStyle + " />" +
                     "<line class='" + this.analogClockLinePrefix + "-s-tail dyclock-s-tail' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + stlen + "' " + sStyle + " />" +
                 "</svg>" +
-                timeHTML +
-            "</div>";
+            "</div>" +
+            timeHTML;
 
             this.target.html(html);
         };
