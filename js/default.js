@@ -104,3 +104,10 @@ var clockObj12 = new dyClock($("#dyclock-analog-8"), {
     hand : "hm"
 });
 clockObj12.start();
+
+//digital clock - font-5x and font family
+var clockObj13 = new dyClock($(".dyclock-digital-9"), {
+    clock : "digital",
+    format : "HH:mm:ss A"
+});
+clockObj13.start();
