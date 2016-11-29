@@ -48,17 +48,32 @@
 
                 options.radius = global.Math.ceil(options.radius);
 
-                if (options.radius < 40) {
-                    options.radius = 40;
-                } else if (options.radius > 150) {
-                    options.radius = 150;
+                if (options.radius < 30) {
+                    options.radius = 30;
+                } else if (options.radius > this.defaults.radius) {
+                    options.radius = this.defaults.radius;
                 }
             }
 
+            /**
+             * container of the clock
+             */
             this.target = target;
+            this.targetPrefix = this.target.selector.substring(1);
+
+            /**
+             * user configuration extends defaults configuration
+             */
             this.clockOption = (typeof options !== "undefined") ? this.extendSource(options, this.defaults) : this.defaults;
+
+            /**
+             * to start stop clock
+             */
             this.tick = null;
-            this.analogClockLinePrefix = this.target.selector.substring(1);
+
+            /**
+             * to set the clock options format like time string, time ocject
+             */
             this.setClockOptionFormat();
 
         };
@@ -68,10 +83,38 @@
          */
         dyClock.prototype.defaults = {
             clock : "digital",
+
+            //for digital clock
             format : "HH:mm:ss",
+            digitalStyle : {
+                backgroundColor : "#fff",
+                border : "none",
+                fontColor : "#000",
+                fontFamily : "Arial",
+                fontSize : 16
+            },
+
+            //for analog clock
             hand : "hms",
             radius : 150,
-            showdigital : false
+            showdigital : false,
+            image : false,
+            analogStyle : {
+                backgroundColor : "#fff",
+                border : "none",
+                handsColor : {
+                    h : "#000",
+                    m : "#000",
+                    s : "#000"
+                },
+                handsWidth : {
+                    h : 3,
+                    m : 2,
+                    s : 1
+                },
+                roundHands : false,
+                shape : "circle"
+            }
         };
 
         /**
@@ -228,11 +271,15 @@
             var self = this;
 
             if (this.clockOption.clock === "digital") {
-                this.tick = global.setInterval( function() { self.runDigitalClock(); }, 1000);
-            } else if (this.clockOption.clock === "analog") {
-                this.drawAnalogClock();
 
+                this.drawDigitalClock();
+                this.tick = global.setInterval( function() { self.runDigitalClock(); }, 1000);
+
+            } else if (this.clockOption.clock === "analog") {
+
+                this.drawAnalogClock();
                 this.tick = global.setInterval( function() { self.runAnalogClock(); }, 1000);
+
             }
 
         };
@@ -247,14 +294,88 @@
          };
 
         /**
+         * this function will draw the digital clock
+         */
+        dyClock.prototype.drawDigitalClock = function () {
+
+            var
+                html;
+
+            //create the digital clock container
+            html = "<div class='" + this.targetPrefix + "-digital-time-string dyclock-digital-time'></div>";
+            this.target.html(html);
+
+            this.styleDigitalClock();
+
+        };
+
+        /**
+         * style the digital clock time string
+         */
+        dyClock.prototype.styleDigitalClock = function () {
+            var
+                self = this,
+                digitalStyle = self.clockOption.digitalStyle,
+                elem;
+
+            elem = $("." + self.targetPrefix + "-digital-time-string");
+
+            /**
+             * backgroundColor style
+             */
+            if (typeof digitalStyle.backgroundColor !== "undefined") {
+                elem.css('background-color', digitalStyle.backgroundColor);
+            } else {
+                elem.css('background-color', self.defaults.digitalStyle.backgroundColor);
+            }
+
+            /**
+             * border style
+             */
+            if (typeof digitalStyle.border !== "undefined") {
+                elem.css('border', digitalStyle.border);
+            } else {
+                elem.css('border', self.defaults.digitalStyle.border);
+            }
+
+            /**
+             * fontColor style
+             */
+            if (typeof digitalStyle.fontColor !== "undefined") {
+                elem.css('color', digitalStyle.fontColor);
+            } else {
+                elem.css('color', self.defaults.digitalStyle.fontColor);
+            }
+
+            /**
+             * fontFamily style
+             */
+            if (typeof digitalStyle.fontFamily !== "undefined") {
+                elem.css('font-family', digitalStyle.fontFamily);
+            } else {
+                elem.css('font-family', self.defaults.digitalStyle.fontFamily);
+            }
+
+            /**
+             * fontSize style
+             */
+            if (typeof digitalStyle.fontSize !== "undefined") {
+                elem.css('font-size', digitalStyle.fontSize);
+            } else {
+                elem.css('font-size', self.defaults.digitalStyle.fontSize);
+            }
+
+        };
+
+        /**
          * this function will run the digital clock
          */
         dyClock.prototype.runDigitalClock = function () {
 
             var
-                html = "<div class='dyclock-digital-time'>" + this.getTimeString(this.getTime(), this.clockOption) + "</div>";
+                targetClass = this.targetPrefix + "-digital-time-string";
 
-            this.target.html(html);
+            $("."+targetClass).html(this.getTimeString(this.getTime(), this.clockOption));
 
         };
 
@@ -273,47 +394,171 @@
                 slen = global.Math.ceil(this.clockOption.radius * 0.1),
                 stlen = global.Math.ceil(this.clockOption.radius * 0.9),
                 clockStyle = "",
-                hStyle = "",
-                mStyle = "",
-                sStyle = "",
                 timeHTML = "",
                 html;
 
+            /**
+             * show digital clock time string
+             */
             if (this.clockOption.showdigital === true) {
-                timeHTML = "<div class='" + this.analogClockLinePrefix + "-time-string' style='text-align: center; margin-top: 15px;'></div>";
+                timeHTML = "<div class='" + this.targetPrefix + "-digital-time-string dyclock-digital-time' style='text-align: center; margin-top: 15px;'></div>";
             } else {
-                timeHTML = "<div class='" + this.analogClockLinePrefix + "-time-string' style='display: none; text-align: center; margin-top: 15px;'></div>";
+                timeHTML = "<div class='" + this.targetPrefix + "-digital-time-string dyclock-digital-time' style='display: none; text-align: center; margin-top: 15px;'></div>";
             }
 
-            if (typeof this.clockOption.image !== "undefined") {
+            /**
+             * if analog clock face image is provided then use that
+             */
+            if (typeof this.clockOption.image !== "undefined" && this.clockOption.image !== false) {
                 clockStyle = "style = 'background: url(" + this.clockOption.image + "); background-repeat: no-repeat; background-size: contain;'";
             }
 
-            if (typeof this.clockOption.hand !== "undefined") {
-                if (this.clockOption.hand[0] !== "h") {
-                    hStyle = "style = 'display: none'";
-                }
-
-                if (this.clockOption.hand[1] !== "m") {
-                    mStyle = "style = 'display: none'";
-                }
-
-                if (this.clockOption.hand[2] !== "s") {
-                    sStyle = "style = 'display: none'";
-                }
-            }
-
-            html = "<div class='dyclock-analog-time' " + clockStyle + ">" +
+            /**
+             * create the analog clock html
+             */
+            html = "<div class='dyclock-analog-time " + this.targetPrefix + "-analog-clock'" + clockStyle + ">" +
                 "<svg width='" + width + "' height='" + height + "'>" +
-                    "<line class='" + this.analogClockLinePrefix + "-h-hand dyclock-h-hand' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + hlen + "' " + hStyle + "/>" +
-                    "<line class='" + this.analogClockLinePrefix + "-m-hand dyclock-m-hand' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + mlen + "' " + mStyle + " />" +
-                    "<line class='" + this.analogClockLinePrefix + "-s-hand dyclock-s-hand' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + slen + "' " + sStyle + " />" +
-                    "<line class='" + this.analogClockLinePrefix + "-s-tail dyclock-s-tail' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + stlen + "' " + sStyle + " />" +
+                    "<line class='" + this.targetPrefix + "-analog-hand " + this.targetPrefix + "-h-hand dyclock-h-hand' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + hlen + "'/>" +
+                    "<line class='" + this.targetPrefix + "-analog-hand " + this.targetPrefix + "-m-hand dyclock-m-hand' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + mlen + "'/>" +
+                    "<line class='" + this.targetPrefix + "-analog-hand " + this.targetPrefix + "-s-hand dyclock-s-hand' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + slen + "'/>" +
+                    "<line class='" + this.targetPrefix + "-analog-hand " + this.targetPrefix + "-s-tail dyclock-s-tail' x1='" + cx + "' y1='" + cy + "' x2='" + cx + "' y2='" + stlen + "'/>" +
                 "</svg>" +
             "</div>" +
             timeHTML;
 
             this.target.html(html);
+            this.styleDigitalClock();
+            this.styleAnalogClock();
+
+        };
+
+        /**
+         *
+         */
+        dyClock.prototype.styleAnalogClock = function () {
+
+            var
+                self = this,
+                elem = $("." + self.targetPrefix + "-analog-clock"),
+                analogStyle = self.clockOption.analogStyle;
+
+            /**
+             * backgroundColor style
+             */
+            if (typeof analogStyle.backgroundColor !== "undefined") {
+                elem.css('background-color', analogStyle.backgroundColor);
+            } else {
+                elem.css('background-color', self.defaults.analogStyle.backgroundColor);
+            }
+
+            /**
+             * border style
+             */
+            if (typeof analogStyle.border !== "undefined") {
+                elem.css('border', analogStyle.border);
+            } else {
+                elem.css('border', self.defaults.analogStyle.border);
+            }
+
+            /**
+             * handsColor style
+             */
+            if (typeof analogStyle.handsColor !== "undefined") {
+
+                //hour hand
+                if (typeof analogStyle.handsColor.h !== "undefined") {
+                    $("." + this.targetPrefix + "-h-hand").css('stroke', analogStyle.handsColor.h);
+                } else {
+                    $("." + this.targetPrefix + "-h-hand").css('stroke', self.defaults.analogStyle.handsColor.h);
+                }
+
+                //minute hand
+                if (typeof analogStyle.handsColor.m !== "undefined") {
+                    $("." + this.targetPrefix + "-m-hand").css('stroke', analogStyle.handsColor.m);
+                } else {
+                    $("." + this.targetPrefix + "-m-hand").css('stroke', self.defaults.analogStyle.handsColor.m);
+                }
+
+                //second hand
+                if (typeof analogStyle.handsColor.s !== "undefined") {
+                    $("." + this.targetPrefix + "-s-hand").css('stroke', analogStyle.handsColor.s);
+                    $("." + this.targetPrefix + "-s-tail").css('stroke', analogStyle.handsColor.s);
+                } else {
+                    $("." + this.targetPrefix + "-s-hand").css('stroke', self.defaults.analogStyle.handsColor.s);
+                    $("." + this.targetPrefix + "-s-tail").css('stroke', self.defaults.analogStyle.handsColor.s);
+                }
+
+            } else {
+
+                //hour hand
+                $("." + this.targetPrefix + "-h-hand").css('stroke', self.defaults.analogStyle.handsColor.h);
+
+                //minute hand
+                $("." + this.targetPrefix + "-m-hand").css('stroke', self.defaults.analogStyle.handsColor.m);
+
+                //second hand
+                $("." + this.targetPrefix + "-s-hand").css('stroke', self.defaults.analogStyle.handsColor.s);
+                $("." + this.targetPrefix + "-s-tail").css('stroke', self.defaults.analogStyle.handsColor.s);
+
+            }
+
+            /**
+             * handsWidth style
+             */
+            if (typeof analogStyle.handsWidth !== "undefined") {
+
+                //hour hand
+                if (typeof analogStyle.handsWidth.h !== "undefined") {
+                    $("." + this.targetPrefix + "-h-hand").css('stroke-width', analogStyle.handsWidth.h);
+                } else {
+                    $("." + this.targetPrefix + "-h-hand").css('stroke-width', self.defaults.analogStyle.handsWidth.h);
+                }
+
+                //minute hand
+                if (typeof analogStyle.handsWidth.m !== "undefined") {
+                    $("." + this.targetPrefix + "-m-hand").css('stroke-width', analogStyle.handsWidth.m);
+                } else {
+                    $("." + this.targetPrefix + "-m-hand").css('stroke-width', self.defaults.analogStyle.handsWidth.m);
+                }
+
+                //second hand
+                if (typeof analogStyle.handsWidth.s !== "undefined") {
+                    $("." + this.targetPrefix + "-s-hand").css('stroke-width', analogStyle.handsWidth.s);
+                    $("." + this.targetPrefix + "-s-tail").css('stroke-width', analogStyle.handsWidth.s);
+                } else {
+                    $("." + this.targetPrefix + "-s-hand").css('stroke-width', self.defaults.analogStyle.handsWidth.s);
+                    $("." + this.targetPrefix + "-s-tail").css('stroke-width', self.defaults.analogStyle.handsWidth.s);
+                }
+
+            } else {
+
+                //hour hand
+                $("." + this.targetPrefix + "-h-hand").css('stroke-width', self.defaults.analogStyle.handsWidth.h);
+
+                //minute hand
+                $("." + this.targetPrefix + "-m-hand").css('stroke-width', self.defaults.analogStyle.handsWidth.m);
+
+                //second hand
+                $("." + this.targetPrefix + "-s-hand").css('stroke-width', self.defaults.analogStyle.handsWidth.s);
+                $("." + this.targetPrefix + "-s-tail").css('stroke-width', self.defaults.analogStyle.handsWidth.s);
+
+            }
+
+            /**
+             * roundHands style
+             */
+            if (typeof analogStyle.roundHands !== "undefined" && analogStyle.roundHands === true) {
+                $("." + this.targetPrefix + "-analog-hand").css('stroke-linecap', 'round');
+            }
+
+            /**
+             * shape style
+             */
+            if (typeof analogStyle.shape !== "undefined" && analogStyle.shape === "circle") {
+                elem.css('border-radius', '50%');
+            }
+
+
         };
 
         /**
@@ -328,13 +573,13 @@
                 s = 6 * d.second;
 
             //clock-hands
-            $("." + this.analogClockLinePrefix + "-h-hand").attr('transform', this.getRotateStr(h));
-            $("." + this.analogClockLinePrefix + "-m-hand").attr('transform', this.getRotateStr(m));
-            $("." + this.analogClockLinePrefix + "-s-hand").attr('transform', this.getRotateStr(s));
-            $("." + this.analogClockLinePrefix + "-s-tail").attr('transform', this.getRotateStr(s+180));
+            $("." + this.targetPrefix + "-h-hand").attr('transform', this.getRotateStr(h));
+            $("." + this.targetPrefix + "-m-hand").attr('transform', this.getRotateStr(m));
+            $("." + this.targetPrefix + "-s-hand").attr('transform', this.getRotateStr(s));
+            $("." + this.targetPrefix + "-s-tail").attr('transform', this.getRotateStr(s+180));
 
             //time-string
-            $("." + this.analogClockLinePrefix + "-time-string").html(this.getTimeString(this.getTime(), this.clockOption));
+            $("." + this.targetPrefix + "-digital-time-string").html(this.getTimeString(this.getTime(), this.clockOption));
         };
 
         /**

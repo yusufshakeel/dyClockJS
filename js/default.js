@@ -14,100 +14,112 @@
 
 //default: digital clock default format: (HH:mm:ss)
 var clockObj = new dyClock($("#dyclock-digital"));
+console.log(clockObj);
 clockObj.start();
 
-//default: digital clock format: (hh:mm:ss a)
+//default: digital clock default format: (HH:mm:ss) border
 var clockObj2 = new dyClock($("#dyclock-digital-2"), {
-    format : "hh:mm:ss a"
+    clock : "digital",
+    format : "HH:mm:ss",
+    digitalStyle : {
+        border : '1px solid #999'
+    }
 });
+console.log(clockObj2);
 clockObj2.start();
 
-//default: digital clock format: (hh:mm a)
+//default: digital clock default format: (HH:mm:ss) and digitalStyle
 var clockObj3 = new dyClock($("#dyclock-digital-3"), {
-    format : "hh:mm a"
+    clock : "digital",
+    format : "HH:mm:ss",
+    digitalStyle : {
+        border : '1px solid #999',
+        backgroundColor : "lightgrey",
+        fontColor : "black",
+        fontSize : 48,
+        fontFamily : 'Faster One'
+    }
 });
+console.log(clockObj3);
 clockObj3.start();
 
-//default: digital clock format: (hh:mm:ss a) by class
+//default: digital clock format: (HH:mm:ss A)
 var clockObj4 = new dyClock($(".dyclock-digital-4"), {
-    format : "hh:mm:ss a"
+    clock : "digital",
+    format : "hh:mm:ss A"
 });
+console.log(clockObj4);
 clockObj4.start();
 
-//analog clock
-var clockObj5 = new dyClock($("#dyclock-analog"), {
-    clock : "analog"
+//default: digital clock format: (HH:mm a)
+var clockObj5 = new dyClock($(".dyclock-digital-5"), {
+    clock : "digital",
+    format : "hh:mm a"
 });
+console.log(clockObj5);
 clockObj5.start();
 
-//analog clock with digital time string
-var clockObj6 = new dyClock($("#dyclock-analog-2"), {
-    clock : "analog",
-    showdigital : true
+//analog clock
+var clockObj6 = new dyClock($("#dyclock-analog-6"), {
+    clock : "analog"
 });
+console.log(clockObj6);
 clockObj6.start();
 
-//analog clock with digital time string (hh:mm:ss a)
-var clockObj7 = new dyClock($("#dyclock-analog-3"), {
+//analog clock - image 1
+var clockObj7 = new dyClock($("#dyclock-analog-7"), {
     clock : "analog",
-    format : "hh:mm:ss a",
-    showdigital : true
-});
-clockObj7.start();
-
-//analog clock with digital time string (hh:mm:ss a) radius 60px
-var clockObj8 = new dyClock($("#dyclock-analog-4"), {
-    clock : "analog",
-    format : "hh:mm:ss a",
-    showdigital : true,
-    radius : 60
-});
-clockObj8.start();
-
-//analog clock with digital time string (hh:mm:ss a) radius 60px with background-image
-var clockObj9 = new dyClock($("#dyclock-analog-5"), {
-    clock : "analog",
-    format : "hh:mm:ss a",
-    showdigital : true,
-    radius : 60,
     image : "image/c01.png"
 });
+console.log(clockObj7);
+clockObj7.start();
+
+//analog clock - image 2
+var clockObj8 = new dyClock($("#dyclock-analog-8"), {
+    clock : "analog",
+    image : "image/c02.png",
+    showdigital : true,
+    format : "hh:mm:ss A",
+    digitalStyle : {
+        fontColor : "black",
+        fontFamily : 'Faster One',
+        fontSize : 28,
+    }
+});
+console.log(clockObj8);
+clockObj8.start();
+
+//analog clock - image 3
+var clockObj9 = new dyClock($(".dyclock-analog-9"), {
+    clock : "analog",
+
+    format : "hh:mm:ss A",
+    digitalStyle : {
+        fontColor : "black",
+        fontFamily : 'Monofett',
+        fontSize : 32,
+    },
+
+
+    image : "image/c02.png",
+    showdigital : true,
+    radius : 120,
+    analogStyle : {
+        backgroundColor : "#eee",
+        border : '1px solid #999',
+        handsColor : {
+            h : "red",
+            m : "orange",
+            s : "green"
+        },
+        handsWidth : {
+            h : 9,
+            m : 5,
+            s : 2
+        },
+        roundHands : true,
+        shape : "circle"
+    }
+});
+console.log(clockObj9);
 clockObj9.start();
-
-//analog clock with digital time string (hh:mm:ss a) radius 150px with background-image
-var clockObj10 = new dyClock($("#dyclock-analog-6"), {
-    clock : "analog",
-    format : "hh:mm:ss a",
-    showdigital : true,
-    radius : 100,
-    image : "image/c02.png"
-});
-clockObj10.start();
-
-//analog clock with digital time string (hh:mm:ss a) radius 150px with background-image
-var clockObj11 = new dyClock($("#dyclock-analog-7"), {
-    clock : "analog",
-    format : "hh:mm:ss a",
-    showdigital : true,
-    radius : 150,
-    image : "image/c03.png"
-});
-clockObj11.start();
-
-//analog clock with digital time string (hh:mm:ss a) radius 150px with background-image - No second hand
-var clockObj12 = new dyClock($("#dyclock-analog-8"), {
-    clock : "analog",
-    format : "hh:mm:ss a",
-    showdigital : true,
-    radius : 150,
-    image : "image/c03.png",
-    hand : "hm"
-});
-clockObj12.start();
-
-//digital clock - font-5x and font family
-var clockObj13 = new dyClock($(".dyclock-digital-9"), {
-    clock : "digital",
-    format : "HH:mm:ss A"
-});
-clockObj13.start();
