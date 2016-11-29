@@ -4,6 +4,9 @@ dyClockJS is a small plugin to create digital and analog clock for your blog and
 # Author
 [Yusuf Shakeel](http://www.yusufshakeel.com)
 
+# Documentation
+[Click here](https://www.dyclassroom.com/dyclockjs/documentation) for project documentation.
+
 # Fonts
 This project uses Google Fonts [Click here](https://fonts.google.com)
 
