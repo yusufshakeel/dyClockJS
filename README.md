@@ -1,5 +1,5 @@
 # dyClockJS
-This is a JavaScript library to create digital and analog clock for your blog and website.
+dyClockJS is a small plugin to create digital and analog clock for your blog and website.
 
 # Author
 [Yusuf Shakeel](http://www.yusufshakeel.com)
