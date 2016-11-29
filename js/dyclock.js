@@ -280,9 +280,9 @@
                 html;
 
             if (this.clockOption.showdigital === true) {
-                timeHTML = "<div class='" + this.analogClockLinePrefix + "-time-string' style='text-align: center'></div>";
+                timeHTML = "<div class='" + this.analogClockLinePrefix + "-time-string' style='text-align: center; margin-top: 15px;'></div>";
             } else {
-                timeHTML = "<div class='" + this.analogClockLinePrefix + "-time-string' style='display: none; text-align: center'></div>";
+                timeHTML = "<div class='" + this.analogClockLinePrefix + "-time-string' style='display: none; text-align: center; margin-top: 15px;'></div>";
             }
 
             if (typeof this.clockOption.image !== "undefined") {

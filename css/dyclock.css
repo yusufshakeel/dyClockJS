@@ -26,6 +26,7 @@
 }
 
 /*================================== font =============================*/
+
 @font-face {
     font-family: 'Faster One';
     src: url(../font/FasterOne-Regular.ttf);
@@ -77,8 +78,28 @@
 
 /*================================== font ends here ===================*/
 
+/*================================== font size =============================*/
 
-/*================================== dyclock analog hand ===================*/
+.dyclock-container.font-1x {
+    font-size: 100%;
+}
+.dyclock-container.font-2x {
+    font-size: 150%;
+}
+.dyclock-container.font-3x {
+    font-size: 200%;
+}
+.dyclock-container.font-4x {
+    font-size: 250%;
+}
+.dyclock-container.font-5x {
+    font-size: 300%;
+}
+
+/*================================== font size ends here ==================*/
+
+/*================================== analog hand ==========================*/
+
 .dyclock-h-hand,
 .dyclock-m-hand,
 .dyclock-s-hand,
@@ -98,26 +119,4 @@
     stroke-width : 1px;
 }
 
-/*================================== dyclock analog hand ENDS HERE =========*/
-
-
-
-/*================================== dyclock font ===================*/
-
-.dyclock-container.font-1x {
-    font-size: 100%;
-}
-.dyclock-container.font-2x {
-    font-size: 150%;
-}
-.dyclock-container.font-3x {
-    font-size: 200%;
-}
-.dyclock-container.font-4x {
-    font-size: 250%;
-}
-.dyclock-container.font-5x {
-    font-size: 300%;
-}
-
-/*================================== dyclock font ends here =========*/
+/*================================== analog hand ends here ================*/
