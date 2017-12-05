@@ -5,8 +5,8 @@ dyClockJS is a small plugin to create digital and analog clock for your blog and
 ### Status
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/yusufshakeel/dyClockJS)
-[![npm version](https://img.shields.io/badge/npm-1.1.0-blue.svg)](https://www.npmjs.com/package/dyclockjs)
-[![](https://data.jsdelivr.com/v1/package/npm/dycodehighlighter/badge)](https://www.jsdelivr.com/package/npm/dyclockjs)
+[![npm version](https://img.shields.io/badge/npm-1.1.1-blue.svg)](https://www.npmjs.com/package/dyclockjs)
+[![](https://data.jsdelivr.com/v1/package/npm/dyclockjs/badge)](https://www.jsdelivr.com/package/npm/dyclockjs)
 
 
 ### Getting Started
