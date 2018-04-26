@@ -31,5 +31,7 @@
   src: url(../font/VastShadow-Regular.ttf); }
 .dyclock-container {
   display: inline-block; }
+  .dyclock-container .dyclock-digital-time {
+    padding: 5px; }
 
 /*# sourceMappingURL=dyClock.css.map */
