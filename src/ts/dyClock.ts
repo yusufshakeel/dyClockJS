@@ -136,7 +136,7 @@ class dyClock {
      * @return object
      */
     private extendSource(source: any, defaults: any) {
-        var property;
+        let property;
         for (property in defaults) {
             if (source.hasOwnProperty(property) === false) {
                 source[property] = defaults[property];
@@ -194,6 +194,93 @@ class dyClock {
             this.clockOption.format_showam = true;
             this.clockOption.format_showamvalue = (ampm === "a") ? ["am", "pm"] : ["AM", "PM"];
         }
+
+    }
+
+    /**
+     * Get the current time.
+     */
+    private getTime() {
+
+        let
+            dateObj = new Date(),
+            time = {
+                hour: null,
+                minute: null,
+                second: null
+            };
+
+        // set current time
+        time.hour = dateObj.getHours();
+        time.minute = dateObj.getMinutes();
+        time.second = dateObj.getSeconds();
+
+        return time;
+
+    }
+
+    /**
+     * This function will return time string based on user option.
+     *
+     * @param timeData
+     * @param clockOption
+     * @return string
+     */
+    private getTimeString(timeData: any, clockOption: any) {
+
+        let
+            tmp,
+            timeString = "";
+
+        switch (clockOption.format_time.hour) {
+            case "12":
+                // set hour
+                if (timeData.hour === 0) {
+                    timeString = "12 ";
+                } else if (timeData.hour > 12) {
+                    tmp = (timeData.hour - 12);
+                    timeString = (tmp < 10) ? "0" + tmp : tmp;
+                } else {
+                    timeString = (timeData.hour < 10) ? "0" + timeData.hour : timeData.hour;
+                }
+
+                break;
+
+            case "24":
+                // set hour
+                timeString = (timeData.hour < 10) ? "0" + timeData.hour : timeData.hour;
+                break;
+
+            default:
+                console.error("Invalid format: hour");
+        }
+
+        // set minute
+        if (timeData.minute < 10) {
+            timeString = timeString + " : 0" + timeData.minute;
+        } else {
+            timeString = timeString + " : " + timeData.minute;
+        }
+
+        // set second
+        if (clockOption.format_time.showSeconds === true) {
+            if (timeData.second < 10) {
+                timeString = timeString + " : 0" + timeData.second;
+            } else {
+                timeString = timeString + " : " + timeData.second;
+            }
+        }
+
+        // show am/pm
+        if (clockOption.format_showam === true) {
+            if (timeData.hour >= 12) {
+                timeString = timeString + " " + clockOption.format_showamvalue[1];
+            } else {
+                timeString = timeString + " " + clockOption.format_showamvalue[0];
+            }
+        }
+
+        return timeString;
 
     }
 
