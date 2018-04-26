@@ -69,6 +69,7 @@ var dyClock = /** @class */ (function () {
         };
         // target elements
         this.target = '';
+        this.targetElemBy = '';
         this.targetPrefix = '';
         // checking target
         if (typeof target === "undefined") {
@@ -85,11 +86,17 @@ var dyClock = /** @class */ (function () {
                 options.radius = this.defaults.radius;
             }
         }
-        /**
-         * container of the clock
-         */
-        this.target = target;
-        this.targetPrefix = this.target[1];
+        // find target element by
+        if (target[0] === "#") {
+            this.targetElemBy = "id";
+        }
+        else if (target[0] === ".") {
+            this.targetElemBy = "class";
+        }
+        // prefix to be used in clock elements creation
+        this.targetPrefix = target.substring(1);
+        // target element
+        this.target = this.targetPrefix;
         /**
          * user configuration extends defaults configuration
          */
@@ -237,16 +244,16 @@ var dyClock = /** @class */ (function () {
     dyClock.prototype.start = function () {
         var self = this;
         if (this.clockOption.clock === "digital") {
-            // this.drawDigitalClock();
+            this.drawDigitalClock();
             this.tick = setInterval(function () {
-                // self.runDigitalClock();
+                self.runDigitalClock();
             }, 1000);
         }
         else if (this.clockOption.clock === "analog") {
             // this.drawAnalogClock();
-            this.tick = setInterval(function () {
-                // self.runAnalogClock();
-            }, 1000);
+            // this.tick = setInterval(function () {
+            //     self.runAnalogClock();
+            // }, 1000);
         }
     };
     /**
@@ -255,5 +262,100 @@ var dyClock = /** @class */ (function () {
     dyClock.prototype.stop = function () {
         clearInterval(this.tick);
     };
+    /**
+     * This will draw the digital clock.
+     */
+    dyClock.prototype.drawDigitalClock = function () {
+        console.log(this.clockOption);
+        console.log(this.target);
+        console.log(this.targetElemBy);
+        console.log(this.targetPrefix);
+        // create the digital clock container
+        var html = "<div class='" + this.targetPrefix + "-digital-time-string dyclock-digital-time'></div>";
+        // draw clock
+        if (this.targetElemBy === "id") {
+            document.getElementById(this.target).innerHTML = html;
+        }
+        else if (this.targetElemBy === "class") {
+            var elArr = document.getElementsByClassName(this.target);
+            for (var i = 0, len = elArr.length; i < len; i++) {
+                elArr[i].innerHTML = html;
+            }
+        }
+        // style
+        this.styleDigitalClock();
+    };
+    /**
+     * Style the digital clock time string.
+     */
+    dyClock.prototype.styleDigitalClock = function () {
+        var digitalStyle = this.clockOption.digitalStyle;
+        /**
+         * backgroundColor style
+         */
+        if (typeof digitalStyle.backgroundColor !== "undefined") {
+            this.styleDigitalClock_setCSS('backgroundColor', digitalStyle.backgroundColor);
+        }
+        else {
+            this.styleDigitalClock_setCSS('backgroundColor', this.defaults.digitalStyle.backgroundColor);
+        }
+        /**
+         * border style
+         */
+        if (typeof digitalStyle.border !== "undefined") {
+            this.styleDigitalClock_setCSS('border', digitalStyle.border);
+        }
+        else {
+            this.styleDigitalClock_setCSS('border', this.defaults.digitalStyle.border);
+        }
+        /**
+         * fontColor style
+         */
+        if (typeof digitalStyle.fontColor !== "undefined") {
+            this.styleDigitalClock_setCSS('color', digitalStyle.fontColor);
+        }
+        else {
+            this.styleDigitalClock_setCSS('color', this.defaults.digitalStyle.fontColor);
+        }
+        /**
+         * fontFamily style
+         */
+        if (typeof digitalStyle.fontFamily !== "undefined") {
+            this.styleDigitalClock_setCSS('fontFamily', digitalStyle.fontFamily);
+        }
+        else {
+            this.styleDigitalClock_setCSS('fontFamily', this.defaults.digitalStyle.fontFamily);
+        }
+        /**
+         * fontSize style
+         */
+        if (typeof digitalStyle.fontSize !== "undefined") {
+            this.styleDigitalClock_setCSS('fontSize', digitalStyle.fontSize + 'px');
+        }
+        else {
+            this.styleDigitalClock_setCSS('fontSize', this.defaults.digitalStyle.fontSize + 'px');
+        }
+    };
+    /**
+     * This is will set the CSS.
+     * @param {string} property
+     * @param {string | number} value
+     */
+    dyClock.prototype.styleDigitalClock_setCSS = function (property, value) {
+        var elemArr = document.getElementsByClassName(this.target + "-digital-time-string");
+        for (var i = 0, len = elemArr.length; i < len; i++) {
+            elemArr[i].style[property] = value;
+        }
+    };
+    /**
+     * This will run the digital clock.
+     */
+    dyClock.prototype.runDigitalClock = function () {
+        var elemArr = document.getElementsByClassName(this.target + "-digital-time-string");
+        for (var i = 0, len = elemArr.length; i < len; i++) {
+            elemArr[i].innerHTML = this.getTimeString(this.getTime(), this.clockOption);
+        }
+    };
+    ;
     return dyClock;
 }());

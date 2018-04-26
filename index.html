@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    <title>dyClockJS - Yusuf Shakeel</title>
+
+    <link rel="stylesheet"
+          href="dist/css/dyclock.min.css">
+
+    <style>
+        body {
+            padding-top: 20px;
+            padding-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 offset-sm-3 col-md-6 offset-md-3">
+
+            <div class="text-center">
+
+                <h1>dyClockJS</h1>
+                <p>dyClockJS is a small plugin to create digital and analog clock for your blog and website.</p>
+
+                <a href="https://github.com/yusufshakeel/dyClockJS/releases"
+                   class="btn btn-outline-primary">Download</a>
+                <a href="https://github.com/yusufshakeel/dyClockJS"
+                   class="btn btn-outline-primary">GitHub</a>
+
+                <hr>
+
+                <p>Created by: <a href='https://github.com/yusufshakeel'>Yusuf Shakeel</a></p>
+                <p><a href='https://www.youtube.com/watch?v=FO4qE88t2OA'>Click here</a> to watch the tutorial video.</p>
+                <p><a href='https://www.dyclassroom.com/dyclockjs/documentation'>Click here</a> for the documentation.
+                </p>
+
+                <hr>
+
+                <h4>License</h4>
+                <p>It's free and released under <a href="https://github.com/yusufshakeel/dyClockJS/blob/master/LICENSE">MIT
+                    License</a> Copyright (c) 2016 Yusuf Shakeel</p>
+
+            </div>
+        </div><!--/ .col -->
+    </div><!--/ .row -->
+
+    <!-- DEMO -->
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 offset-sm-3 col-md-6 offset-md-3">
+
+            <hr>
+
+            <h2 class="text-center">Demo</h2>
+
+            <h4 class="text-center">Digital Clock (default HH:mm:ss)</h4>
+            <div class="some-class text-center">
+                <div id="dyclock-digital" class="dyclock-container"></div>
+            </div>
+
+            <hr/>
+
+            <h4 class="text-center">Digital Clock (default HH:mm:ss) border</h4>
+            <div class="some-class text-center">
+                <div id="dyclock-digital-2" class="dyclock-container"></div>
+            </div>
+
+            <hr/>
+
+            <h4 class="text-center">Digital Clock (default HH:mm:ss) and digitalStyle</h4>
+            <div class="some-class text-center">
+                <div id="dyclock-digital-3" class="dyclock-container"></div>
+            </div>
+
+            <hr/>
+
+            <h4 class="text-center">Digital Clock (hh:mm:ss A) by class</h4>
+            <div class="some-class text-center">
+                <div class="dyclock-digital-4 dyclock-container"></div>
+                <div class="dyclock-digital-4 dyclock-container"></div>
+                <div class="dyclock-digital-4 dyclock-container"></div>
+            </div>
+
+            <hr/>
+
+            <h4 class="text-center">Digital Clock (HH:mm a) by class</h4>
+            <div class="some-class text-center">
+                <div class="dyclock-digital-5 dyclock-container"></div>
+            </div>
+
+
+        </div><!--/ .col -->
+    </div><!--/ .row -->
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 offset-sm-3 col-md-6 offset-md-3">
+
+            <hr>
+
+            <div class="text-center">
+                <h4>Donate</h4>
+                <p>Feeling generous &hearts;
+                    <br>Buy me a cup of tea</p>
+                <p><a href="https://www.paypal.me/yusufshakeel">Donate via PayPal</a></p>
+            </div>
+        </div><!--/ .col -->
+    </div><!--/ .row -->
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 offset-sm-3 col-md-6 offset-md-3">
+
+            <hr>
+
+            <div class="text-center">
+                <p>Copyright &copy; Yusuf Shakeel</p>
+                <p>MIT License</p>
+            </div>
+        </div><!--/ .col -->
+    </div><!--/ .row -->
+</div>
+
+<!-- dyScrollUpJS -->
+<script src="https://cdn.jsdelivr.net/npm/dyscrollupjs@2.0.0/dist/js/dyscrollup.min.js"></script>
+<script src="dist/js/dyclock.min.js"></script>
+<script>
+    window.onload = function () {
+        dyscrollup.init({
+            showafter: 300,
+            scrolldelay: 300,
+            position: 'right',
+            image: 'https://cdn.jsdelivr.net/npm/dyscrollupjs@2.0.0/dist/image/32.png',
+            shape: 'other',
+            width: 30,
+            height: 30
+        });
+
+        // default: digital clock default format: (HH:mm:ss)
+        var clockObj = new dyClock("#dyclock-digital");
+        clockObj.start();
+
+        // default: digital clock default format: (HH:mm:ss) border
+        var clockObj2 = new dyClock("#dyclock-digital-2", {
+            clock: "digital",
+            format: "HH:mm:ss",
+            digitalStyle: {
+                border: '1px solid #999'
+            }
+        });
+        clockObj2.start();
+
+        // default: digital clock default format: (HH:mm:ss) and digitalStyle
+        var clockObj3 = new dyClock("#dyclock-digital-3", {
+            clock: "digital",
+            format: "HH:mm:ss",
+            digitalStyle: {
+                border: '1px solid #999',
+                backgroundColor: "lightgrey",
+                fontColor: "black",
+                fontSize: 48,
+                fontFamily: 'Faster One'
+            }
+        });
+        clockObj3.start();
+
+        // default: digital clock format: (HH:mm:ss A)
+        var clockObj4 = new dyClock(".dyclock-digital-4", {
+            clock: "digital",
+            format: "hh:mm:ss A"
+        });
+        clockObj4.start();
+
+        // default: digital clock format: (HH:mm a)
+        var clockObj5 = new dyClock(".dyclock-digital-5", {
+            clock: "digital",
+            format: "hh:mm a"
+        });
+        clockObj5.start();
+    };
+</script>
+</body>
+</html>
