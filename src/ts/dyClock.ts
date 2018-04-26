@@ -129,7 +129,7 @@ class dyClock {
     }
 
     /**
-     * this function will extend source object with defaults object.
+     * This will extend source object with defaults object.
      *
      * @param source     this is the source object
      * @param defaults   this is the default object
@@ -220,7 +220,7 @@ class dyClock {
     }
 
     /**
-     * This function will return time string based on user option.
+     * This will return time string based on user option.
      *
      * @param timeData
      * @param clockOption
@@ -282,6 +282,38 @@ class dyClock {
 
         return timeString;
 
+    }
+
+    /**
+     * This will start the clock.
+     */
+    public start() {
+
+        let self = this;
+
+        if (this.clockOption.clock === "digital") {
+
+            // this.drawDigitalClock();
+            this.tick = setInterval(function () {
+                // self.runDigitalClock();
+            }, 1000);
+
+        } else if (this.clockOption.clock === "analog") {
+
+            // this.drawAnalogClock();
+            this.tick = setInterval(function () {
+                // self.runAnalogClock();
+            }, 1000);
+
+        }
+
+    }
+
+    /**
+     * This will stop the clock.
+     */
+    public stop() {
+        clearInterval(this.tick);
     }
 
 }
