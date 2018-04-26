@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc && grunt",
-    "all": "npm run build && npm run test"
+    "all": "npm run build"
   },
   "repository": {
     "type": "git",
