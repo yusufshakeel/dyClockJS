@@ -2,7 +2,7 @@
   "name": "dyclockjs",
   "version": "2.0.0",
   "description": "dyClockJS is a small plugin to create digital and analog clock for your blog and website.",
-  "main": "index.js",
+  "main": "dist",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc && grunt",
