@@ -399,9 +399,17 @@ class dyClock {
          * fontSize style
          */
         if (typeof digitalStyle.fontSize !== "undefined") {
-            this.setCSSByClass('fontSize', digitalStyle.fontSize + 'px', elClass);
+            if (typeof digitalStyle.fontSize === "number") {
+                this.setCSSByClass('fontSize', digitalStyle.fontSize + 'px', elClass);
+            } else if (typeof digitalStyle.fontSize === "string") {
+                this.setCSSByClass('fontSize', digitalStyle.fontSize, elClass);
+            }
         } else {
-            this.setCSSByClass('fontSize', this.defaults.digitalStyle.fontSize + 'px', elClass);
+            if (typeof digitalStyle.fontSize === "number") {
+                this.setCSSByClass('fontSize', this.defaults.digitalStyle.fontSize + 'px', elClass);
+            } else if (typeof digitalStyle.fontSize === "string") {
+                this.setCSSByClass('fontSize', this.defaults.digitalStyle.fontSize, elClass);
+            }
         }
 
     }
