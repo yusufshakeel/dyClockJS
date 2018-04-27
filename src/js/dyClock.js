@@ -67,10 +67,6 @@ var dyClock = /** @class */ (function () {
                 shape: "circle"
             }
         };
-        // target elements
-        this.target = '';
-        this.targetElemBy = '';
-        this.targetPrefix = '';
         // checking target
         if (typeof target === "undefined") {
             console.error("target undefined");
@@ -250,10 +246,10 @@ var dyClock = /** @class */ (function () {
             }, 1000);
         }
         else if (this.clockOption.clock === "analog") {
-            // this.drawAnalogClock();
-            // this.tick = setInterval(function () {
-            //     self.runAnalogClock();
-            // }, 1000);
+            this.drawAnalogClock();
+            this.tick = setInterval(function () {
+                self.runAnalogClock();
+            }, 1000);
         }
     };
     /**
@@ -388,140 +384,148 @@ var dyClock = /** @class */ (function () {
             }
         }
         this.styleDigitalClock();
-        // this.styleAnalogClock();
+        this.styleAnalogClock();
     };
     /**
      * This will style the analog clock.
      */
     dyClock.prototype.styleAnalogClock = function () {
-        // let
-        //     analogStyle = this.clockOption.analogStyle;
-        //
-        // /**
-        //  * backgroundColor style
-        //  */
-        // if (typeof analogStyle.backgroundColor !== "undefined") {
-        //     this.styleAnalogClock_setCSS('backgroundColor', analogStyle.backgroundColor);
-        // } else {
-        //     this.styleAnalogClock_setCSS('backgroundColor', this.defaults.analogStyle.backgroundColor);
-        // }
-        //
-        // /**
-        //  * border style
-        //  */
-        // if (typeof analogStyle.border !== "undefined") {
-        //     this.styleAnalogClock_setCSS('border', analogStyle.border);
-        // } else {
-        //     this.styleAnalogClock_setCSS('border', this.defaults.analogStyle.border);
-        // }
-        //
-        // /**
-        //  * handsColor style
-        //  */
-        // if (typeof analogStyle.handsColor !== "undefined") {
-        //
-        //     //hour hand
-        //     if (typeof analogStyle.handsColor.h !== "undefined") {
-        //         $("." + this.targetPrefix + "-h-hand").css('stroke', analogStyle.handsColor.h);
-        //     } else {
-        //         $("." + this.targetPrefix + "-h-hand").css('stroke', self.defaults.analogStyle.handsColor.h);
-        //     }
-        //
-        //     //minute hand
-        //     if (typeof analogStyle.handsColor.m !== "undefined") {
-        //         $("." + this.targetPrefix + "-m-hand").css('stroke', analogStyle.handsColor.m);
-        //     } else {
-        //         $("." + this.targetPrefix + "-m-hand").css('stroke', self.defaults.analogStyle.handsColor.m);
-        //     }
-        //
-        //     //second hand
-        //     if (typeof analogStyle.handsColor.s !== "undefined") {
-        //         $("." + this.targetPrefix + "-s-hand").css('stroke', analogStyle.handsColor.s);
-        //         $("." + this.targetPrefix + "-s-tail").css('stroke', analogStyle.handsColor.s);
-        //     } else {
-        //         $("." + this.targetPrefix + "-s-hand").css('stroke', self.defaults.analogStyle.handsColor.s);
-        //         $("." + this.targetPrefix + "-s-tail").css('stroke', self.defaults.analogStyle.handsColor.s);
-        //     }
-        //
-        // } else {
-        //
-        //     //hour hand
-        //     $("." + this.targetPrefix + "-h-hand").css('stroke', self.defaults.analogStyle.handsColor.h);
-        //
-        //     //minute hand
-        //     $("." + this.targetPrefix + "-m-hand").css('stroke', self.defaults.analogStyle.handsColor.m);
-        //
-        //     //second hand
-        //     $("." + this.targetPrefix + "-s-hand").css('stroke', self.defaults.analogStyle.handsColor.s);
-        //     $("." + this.targetPrefix + "-s-tail").css('stroke', self.defaults.analogStyle.handsColor.s);
-        //
-        // }
-        //
-        // /**
-        //  * handsWidth style
-        //  */
-        // if (typeof analogStyle.handsWidth !== "undefined") {
-        //
-        //     //hour hand
-        //     if (typeof analogStyle.handsWidth.h !== "undefined") {
-        //         $("." + this.targetPrefix + "-h-hand").css('stroke-width', analogStyle.handsWidth.h);
-        //     } else {
-        //         $("." + this.targetPrefix + "-h-hand").css('stroke-width', self.defaults.analogStyle.handsWidth.h);
-        //     }
-        //
-        //     //minute hand
-        //     if (typeof analogStyle.handsWidth.m !== "undefined") {
-        //         $("." + this.targetPrefix + "-m-hand").css('stroke-width', analogStyle.handsWidth.m);
-        //     } else {
-        //         $("." + this.targetPrefix + "-m-hand").css('stroke-width', self.defaults.analogStyle.handsWidth.m);
-        //     }
-        //
-        //     //second hand
-        //     if (typeof analogStyle.handsWidth.s !== "undefined") {
-        //         $("." + this.targetPrefix + "-s-hand").css('stroke-width', analogStyle.handsWidth.s);
-        //         $("." + this.targetPrefix + "-s-tail").css('stroke-width', analogStyle.handsWidth.s);
-        //     } else {
-        //         $("." + this.targetPrefix + "-s-hand").css('stroke-width', self.defaults.analogStyle.handsWidth.s);
-        //         $("." + this.targetPrefix + "-s-tail").css('stroke-width', self.defaults.analogStyle.handsWidth.s);
-        //     }
-        //
-        // } else {
-        //
-        //     //hour hand
-        //     $("." + this.targetPrefix + "-h-hand").css('stroke-width', self.defaults.analogStyle.handsWidth.h);
-        //
-        //     //minute hand
-        //     $("." + this.targetPrefix + "-m-hand").css('stroke-width', self.defaults.analogStyle.handsWidth.m);
-        //
-        //     //second hand
-        //     $("." + this.targetPrefix + "-s-hand").css('stroke-width', self.defaults.analogStyle.handsWidth.s);
-        //     $("." + this.targetPrefix + "-s-tail").css('stroke-width', self.defaults.analogStyle.handsWidth.s);
-        //
-        // }
-        //
-        // /**
-        //  * roundHands style
-        //  */
-        // if (typeof analogStyle.roundHands !== "undefined" && analogStyle.roundHands === true) {
-        //     $("." + this.targetPrefix + "-analog-hand").css('stroke-linecap', 'round');
-        // }
-        //
-        // /**
-        //  * shape style
-        //  */
-        // if (typeof analogStyle.shape !== "undefined" && analogStyle.shape === "circle") {
-        //     this.styleAnalogClock_setCSS('borderRadius', '50%');
-        // }
+        var elClass = this.target + "-analog-clock", elClass_hHand = this.targetPrefix + "-h-hand", elClass_mHand = this.targetPrefix + "-m-hand", elClass_sHand = this.targetPrefix + "-s-hand", elClass_sTail = this.targetPrefix + "-s-tail", elClass_analogHand = this.targetPrefix + "-analog-hand", analogStyle = this.clockOption.analogStyle;
+        /**
+         * backgroundColor style
+         */
+        if (typeof analogStyle.backgroundColor !== "undefined") {
+            this.setCSSByClass('backgroundColor', analogStyle.backgroundColor, elClass);
+        }
+        else {
+            this.setCSSByClass('backgroundColor', this.defaults.analogStyle.backgroundColor, elClass);
+        }
+        /**
+         * border style
+         */
+        if (typeof analogStyle.border !== "undefined") {
+            this.setCSSByClass('border', analogStyle.border, elClass);
+        }
+        else {
+            this.setCSSByClass('border', this.defaults.analogStyle.border, elClass);
+        }
+        /**
+         * handsColor style
+         */
+        if (typeof analogStyle.handsColor !== "undefined") {
+            //hour hand
+            if (typeof analogStyle.handsColor.h !== "undefined") {
+                this.setCSSByClass('stroke', analogStyle.handsColor.h, elClass_hHand);
+            }
+            else {
+                this.setCSSByClass('stroke', this.defaults.analogStyle.handsColor.h, elClass_hHand);
+            }
+            //minute hand
+            if (typeof analogStyle.handsColor.m !== "undefined") {
+                this.setCSSByClass('stroke', analogStyle.handsColor.m, elClass_mHand);
+            }
+            else {
+                this.setCSSByClass('stroke', this.defaults.analogStyle.handsColor.m, elClass_mHand);
+            }
+            //second hand
+            if (typeof analogStyle.handsColor.s !== "undefined") {
+                this.setCSSByClass('stroke', analogStyle.handsColor.s, elClass_sHand);
+                this.setCSSByClass('stroke', analogStyle.handsColor.s, elClass_sTail);
+            }
+            else {
+                this.setCSSByClass('stroke', this.defaults.analogStyle.handsColor.s, elClass_sHand);
+                this.setCSSByClass('stroke', this.defaults.analogStyle.handsColor.s, elClass_sTail);
+            }
+        }
+        else {
+            //hour hand
+            this.setCSSByClass('stroke', this.defaults.analogStyle.handsColor.h, elClass_hHand);
+            //minute hand
+            this.setCSSByClass('stroke', this.defaults.analogStyle.handsColor.m, elClass_mHand);
+            //second hand
+            this.setCSSByClass('stroke', this.defaults.analogStyle.handsColor.s, elClass_sHand);
+            this.setCSSByClass('stroke', this.defaults.analogStyle.handsColor.s, elClass_sTail);
+        }
+        /**
+         * handsWidth style
+         */
+        if (typeof analogStyle.handsWidth !== "undefined") {
+            //hour hand
+            if (typeof analogStyle.handsWidth.h !== "undefined") {
+                this.setCSSByClass('strokeWidth', analogStyle.handsWidth.h, elClass_hHand);
+            }
+            else {
+                this.setCSSByClass('strokeWidth', this.defaults.analogStyle.handsWidth.h, elClass_hHand);
+            }
+            //minute hand
+            if (typeof analogStyle.handsWidth.m !== "undefined") {
+                this.setCSSByClass('strokeWidth', analogStyle.handsWidth.m, elClass_mHand);
+            }
+            else {
+                this.setCSSByClass('strokeWidth', this.defaults.analogStyle.handsWidth.m, elClass_mHand);
+            }
+            //second hand
+            if (typeof analogStyle.handsWidth.s !== "undefined") {
+                this.setCSSByClass('strokeWidth', analogStyle.handsWidth.s, elClass_sHand);
+                this.setCSSByClass('strokeWidth', analogStyle.handsWidth.s, elClass_sTail);
+            }
+            else {
+                this.setCSSByClass('strokeWidth', this.defaults.analogStyle.handsWidth.s, elClass_sHand);
+                this.setCSSByClass('strokeWidth', this.defaults.analogStyle.handsWidth.s, elClass_sTail);
+            }
+        }
+        else {
+            //hour hand
+            this.setCSSByClass('strokeWidth', this.defaults.analogStyle.handsWidth.h, elClass_hHand);
+            //minute hand
+            this.setCSSByClass('strokeWidth', this.defaults.analogStyle.handsWidth.m, elClass_mHand);
+            //second hand
+            this.setCSSByClass('strokeWidth', this.defaults.analogStyle.handsWidth.s, elClass_sHand);
+            this.setCSSByClass('strokeWidth', this.defaults.analogStyle.handsWidth.s, elClass_sTail);
+        }
+        /**
+         * roundHands style
+         */
+        if (typeof analogStyle.roundHands !== "undefined" && analogStyle.roundHands === true) {
+            this.setCSSByClass('strokeLinecap', 'round', elClass_analogHand);
+        }
+        /**
+         * shape style
+         */
+        if (typeof analogStyle.shape !== "undefined" && analogStyle.shape === "circle") {
+            this.setCSSByClass('borderRadius', '50%', elClass);
+        }
     };
     /**
-     * This is will set the CSS.
-     * @param {string} property
-     * @param {string | number} value
+     * This will run the analog clock.
      */
-    dyClock.prototype.styleAnalogClock_setCSS = function (property, value) {
-        var elemArr = document.getElementsByClassName(this.target + "-analog-clock");
+    dyClock.prototype.runAnalogClock = function () {
+        var elClass_hHand = this.targetPrefix + "-h-hand", elClass_mHand = this.targetPrefix + "-m-hand", elClass_sHand = this.targetPrefix + "-s-hand", elClass_sTail = this.targetPrefix + "-s-tail", d = this.getTime(), h = 30 * ((d.hour % 12) + d.minute / 60), m = 6 * d.minute, s = 6 * d.second;
+        // clock-hands
+        this.setAttributeByClass('transform', this.getRotateStr(h), elClass_hHand);
+        this.setAttributeByClass('transform', this.getRotateStr(m), elClass_mHand);
+        this.setAttributeByClass('transform', this.getRotateStr(s), elClass_sHand);
+        this.setAttributeByClass('transform', this.getRotateStr(s + 180), elClass_sTail);
+        // time-string
+        this.runDigitalClock();
+    };
+    /**
+     * This will return the rotate string for transfrom.
+     */
+    dyClock.prototype.getRotateStr = function (val) {
+        var width = this.clockOption.radius * 2, height = this.clockOption.radius * 2, cx = this.clockOption.radius, cy = this.clockOption.radius;
+        return "rotate(" + val + ", " + cx + ", " + cy + ")";
+    };
+    /**
+     * This is will set the attribute.
+     * @param {string} name
+     * @param {string} value
+     * @param {string} elClass
+     */
+    dyClock.prototype.setAttributeByClass = function (name, value, elClass) {
+        var elemArr = document.getElementsByClassName(elClass);
         for (var i = 0, len = elemArr.length; i < len; i++) {
-            elemArr[i].style[property] = value;
+            elemArr[i].setAttribute(name, value);
         }
     };
     /**
