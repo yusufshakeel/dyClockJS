@@ -48,6 +48,7 @@ var dyClock = /** @class */ (function () {
             // for analog clock
             hand: "hms",
             radius: 150,
+            radiusMax: 1200,
             showdigital: false,
             image: false,
             analogStyle: {
@@ -78,8 +79,8 @@ var dyClock = /** @class */ (function () {
             if (options.radius < 30) {
                 options.radius = 30;
             }
-            else if (options.radius > this.defaults.radius) {
-                options.radius = this.defaults.radius;
+            else if (options.radius > this.defaults.radiusMax) {
+                options.radius = this.defaults.radiusMax;
             }
         }
         // find target element by
@@ -262,10 +263,6 @@ var dyClock = /** @class */ (function () {
      * This will draw the digital clock.
      */
     dyClock.prototype.drawDigitalClock = function () {
-        console.log(this.clockOption);
-        console.log(this.target);
-        console.log(this.targetElemBy);
-        console.log(this.targetPrefix);
         // create the digital clock container
         var html = "<div class='" + this.targetPrefix + "-digital-time-string dyclock-digital-time'></div>";
         // draw clock
