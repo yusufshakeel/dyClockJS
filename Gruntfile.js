@@ -21,14 +21,14 @@ module.exports = function(grunt) {
         sass: {
             dist: {
                 files: {
-                    "src/css/dyClock.css": "src/scss/dyClock.scss",
+                    "src/css/dyclock.css": "src/scss/dyclock.scss",
                 }
             }
         },
 
         cssmin : {
             target : {
-                src : ["src/css/dyClock.css"],
+                src : ["src/css/dyclock.css"],
                 dest : "dist/css/dyclock.min.css"
             }
         },
