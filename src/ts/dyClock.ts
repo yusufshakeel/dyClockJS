@@ -412,18 +412,6 @@ class dyClock {
     }
 
     /**
-     * This is will set the CSS.
-     * @param {string} property
-     * @param {string | number} value
-     */
-    private styleDigitalClock_setCSS(property: string, value: string | number) {
-        let elemArr = document.getElementsByClassName(this.target + "-digital-time-string");
-        for (let i = 0, len = elemArr.length; i < len; i++) {
-            (<HTMLElement>elemArr[i]).style[property] = value;
-        }
-    }
-
-    /**
      * This will run the digital clock.
      */
     private runDigitalClock() {

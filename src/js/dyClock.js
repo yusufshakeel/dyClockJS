@@ -337,17 +337,6 @@ var dyClock = /** @class */ (function () {
         }
     };
     /**
-     * This is will set the CSS.
-     * @param {string} property
-     * @param {string | number} value
-     */
-    dyClock.prototype.styleDigitalClock_setCSS = function (property, value) {
-        var elemArr = document.getElementsByClassName(this.target + "-digital-time-string");
-        for (var i = 0, len = elemArr.length; i < len; i++) {
-            elemArr[i].style[property] = value;
-        }
-    };
-    /**
      * This will run the digital clock.
      */
     dyClock.prototype.runDigitalClock = function () {
